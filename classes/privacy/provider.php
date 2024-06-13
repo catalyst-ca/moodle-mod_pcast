@@ -84,6 +84,15 @@ class provider implements
             'privacy:metadata:pcast'
         );
 
+        $items->add_database_table(
+            'pcast_views',
+            [
+                'userid'        => 'privacy:metadata:pcast_views:userid',
+                'episodeid'  => 'privacy:metadata:pcast_views:episodeid',
+            ],
+            'privacy:metadata:pcast_views'
+        );
+
         $items->add_subsystem_link('core_files', [], 'privacy:metadata:core_files');
         $items->add_subsystem_link('core_comment', [], 'privacy:metadata:core_comments');
         $items->add_subsystem_link('core_tag', [], 'privacy:metadata:core_tag');
