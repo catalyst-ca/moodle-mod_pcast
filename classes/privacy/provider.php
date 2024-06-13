@@ -72,6 +72,18 @@ class provider implements
             'privacy:metadata:pcast_episodes'
         );
 
+        $items->add_database_table(
+            'pcast',
+            [
+                'userid'        => 'privacy:metadata:pcast:userid',
+                'name'       => 'privacy:metadata:pcast:name',
+                'subtitle'    => 'privacy:metadata:pcast:subtitle',
+                'keywords'    => 'privacy:metadata:pcast:keywords',
+                'timemodified'  => 'privacy:metadata:pcast:timemodified',
+            ],
+            'privacy:metadata:pcast'
+        );
+
         $items->add_subsystem_link('core_files', [], 'privacy:metadata:core_files');
         $items->add_subsystem_link('core_comment', [], 'privacy:metadata:core_comments');
         $items->add_subsystem_link('core_tag', [], 'privacy:metadata:core_tag');
