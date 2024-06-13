@@ -125,11 +125,11 @@ class provider implements
         }
 
         // Find users with pcast pisodes.
-        $sql = "SELECT ge.userid
+        $sql = "SELECT pe.userid
                   FROM {context} c
                   JOIN {course_modules} cm ON cm.id = c.instanceid AND c.contextlevel = :contextlevel
                   JOIN {modules} m ON m.id = cm.module AND m.name = :modname
-                  JOIN {pcast} p ON g.id = cm.instance
+                  JOIN {pcast} p ON p.id = cm.instance
                   JOIN {pcast_episodes} pe ON pe.pcastid = p.id
                  WHERE c.id = :contextid";
 
@@ -146,7 +146,7 @@ class provider implements
                 $context->id);
 
         // Find users with pcast ratings.
-        $sql = "SELECT ge.id
+        $sql = "SELECT pe.id
                   FROM {context} c
                   JOIN {course_modules} cm ON cm.id = c.instanceid AND c.contextlevel = :contextlevel
                   JOIN {modules} m ON m.id = cm.module AND m.name = :modname
