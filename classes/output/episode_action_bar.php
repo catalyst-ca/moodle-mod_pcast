@@ -37,8 +37,10 @@ class episode_action_bar implements renderable, templatable {
     /** @var object $pcast instance of the pcast module */
     private $module;
     /** @var string $mode The type of view. */
+    private $eid;
+    /** @var int episode ID number */
     private $mode;
-    /** @var string $epmode the type of view for episode. */
+    /** @var string the type of view for episode. */
     private $epmode;
     /** @var bool is rating enabled. */
     private $rate;
@@ -82,7 +84,7 @@ class episode_action_bar implements renderable, templatable {
     public function export_for_template(renderer_base $output) {
         return [
             'addnewbutton' => $this->create_back_button($output),
-            'tabjumps' => $this->generate_tab_jumps($output)
+            'tabjumps' => $this->generate_tab_jumps($output),
         ];
 
     }
@@ -95,7 +97,7 @@ class episode_action_bar implements renderable, templatable {
      */
     private function create_back_button(renderer_base $output): \stdClass {
         $btn = new single_button(new moodle_url('/mod/pcast/view.php', array('id' => $this->cm->id, 'mode' => PCAST_STANDARD_VIEW)),
-            get_string('backtoepisodes', 'pcast'), 'post', false);
+            get_string('backtoepisodes', 'pcast'), 'post', single_button::BUTTON_SECONDARY);
         return $btn->export_for_template($output);
     }
 
@@ -115,7 +117,8 @@ class episode_action_bar implements renderable, templatable {
 
         if ($this->comment || $this->rate) {
             $rateurl = new moodle_url('/mod/pcast/showepisode.php', array('eid' => $this->eid,
-                'mode' => PCAST_EPISODE_COMMENT_AND_RATE));
+                'mode' => PCAST_EPISODE_COMMENT_AND_RATE),
+                );
 
             if ($this->comment && $this->rate) {
                 // Both comments and ratings.

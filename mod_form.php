@@ -224,7 +224,7 @@ class mod_pcast_mod_form extends moodleform_mod {
             array('subdirs' => 0,
                 'maxfiles' => 1,
                 'filetypes' => array('jpeg', 'png'),
-                'returnvalue' => 'ref_id')
+                'returnvalue' => 'ref_id'),
             );
 
         // Image Size (Height).
@@ -301,15 +301,20 @@ class mod_pcast_mod_form extends moodleform_mod {
      */
     public function add_completion_rules() {
         $mform =& $this->_form;
+        $suffix = $this->get_suffix();
+        $completionepisodes = 'completionepisodes' . $suffix;
+        $completionepisodesenabled = 'completionepisodesenabled' . $suffix;
+        $completionepisodesgroup = 'completionepisodesgroup' . $suffix;
+
         $group = array();
-        $group[] =& $mform->createElement('checkbox', 'completionepisodesenabled', '',
+        $group[] =& $mform->createElement('checkbox', $completionepisodesenabled, '',
                 get_string('completionepisodes', 'pcast'));
-        $group[] =& $mform->createElement('text', 'completionepisodes', '', array('size' => 3));
-        $mform->setType('completionepisodes', PARAM_INT);
-        $mform->addGroup($group, 'completionepisodesgroup',
+        $group[] =& $mform->createElement('text', $completionepisodes, '', array('size' => 3));
+        $mform->setType($completionepisodes, PARAM_INT);
+        $mform->addGroup($group, $completionepisodesgroup,
                 get_string('completionepisodesgroup', 'pcast'), array(' '), false);
-        $mform->disabledIf('completionepisodes', 'completionepisodesenabled', 'notchecked');
-        return array('completionepisodesgroup');
+        $mform->disabledIf($completionepisodes, $completionepisodesenabled, 'notchecked');
+        return array($completionepisodesgroup);
     }
 
     /**
@@ -318,7 +323,8 @@ class mod_pcast_mod_form extends moodleform_mod {
      * @return array
      */
     public function completion_rule_enabled($data) {
-        return (!empty($data['completionepisodesenabled']) && $data['completionepisodes'] != 0);
+        $suffix = $this->get_suffix();
+        return (!empty($data['completionepisodesenabled' . $suffix]) && $data['completionepisodes'. $suffix] != 0);
     }
 
     /**
